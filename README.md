@@ -39,16 +39,6 @@ https://cdn.jsdelivr.net/gh/gallhall/venerav-configs@main/index.json
 
 To update a source, replace its `.js` file **and** raise its `version` in `index_extra.json` to the one in the file. The app only offers an update when that version is higher.
 
-## Notes
-
-- **Never edit `index.json`.** Every sync rebuilds it from venera's `index.json` and `index_extra.json`, so direct edits are lost.
-- **Do not edit venera's `.js` files.** Copy the file under a new name instead. If you list the copy with the same `key`, it replaces venera's source.
-- **Use unique keys and file names.** If venera adds a file with the same name later, the sync stops at a conflict. Keep a source's `key` once it is published: devices that installed it lose its settings when the key changes.
-- **Updates take a few minutes.** jsDelivr caches files, and the workflow purges them 30 seconds and again 2 minutes after a push.
-- **When a sync fails**, GitHub emails you. A file was changed both here and in venera: merge `venera-app/venera-configs` `main` by hand, or press **Sync fork → Update branch**. Never press **Discard commits**, which deletes the sources of this fork.
-- **Changes to venera's workflow files** cannot be pushed by the built-in token, so that sync fails too. Press **Sync fork → Update branch** once, or add a token with the `repo` and `workflow` scopes as the `SYNC_TOKEN` secret.
-- **This README is kept over venera's** when both change it.
-
 ## Create a new configuration
 
 1. Download `_template_.js`, `_venera_.js`, put them in the same directory

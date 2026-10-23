@@ -39,16 +39,6 @@ https://cdn.jsdelivr.net/gh/gallhall/venerav-configs@main/index.json
 
 更新源时，替换 `.js` 文件，**同时**把 `index_extra.json` 里的 `version` 改成文件里的版本号。应用只有在这个版本号变大时才会提示更新。
 
-## 注意事项
-
-- **不要直接改 `index.json`。** 每次同步都会用 venera 的 `index.json` 加上 `index_extra.json` 重新生成它，直接改的内容会丢失。
-- **不要改 venera 的 `.js` 文件。** 要改的话，复制一份另起文件名。复制的文件用同样的 `key` 登记，就会替换掉 venera 的那个源。
-- **key 和文件名要独特。** 如果以后 venera 加了同名文件，同步会因冲突停下。源发布后不要再改 `key`：改了之后，已经安装过的设备会丢掉这个源的设置。
-- **更新要几分钟才生效。** jsDelivr 会缓存文件，工作流在推送后 30 秒和 2 分钟各清一次缓存。
-- **同步失败时**，GitHub 会发邮件通知你，说明有文件在本仓库和 venera 两边都改了：手动合并 `venera-app/venera-configs` 的 `main`，或者点 **Sync fork → Update branch**。千万不要点 **Discard commits**，它会删掉本仓库自己的源。
-- **venera 改了它的工作流文件时**，内置 token 没有权限推送，同步也会失败。点一次 **Sync fork → Update branch**，或者把带 `repo` 和 `workflow` 权限的 token 添加为名叫 `SYNC_TOKEN` 的 secret。
-- **README 和 venera 都改了时，保留本仓库的版本。**
-
 ## 编写新的源
 
 1. 下载 `_template_.js` 和 `_venera_.js`，放在同一个目录
