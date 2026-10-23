@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Pixiv",
+        "fileName": "pixiv_token.js",
+        "key": "pixiv_token",
+        "version": "0.3.35",
+        "description": "需要在源设置里填写 refresh_token、clientId、clientSecret、hashSalt"
+    },
+    {
+        "name": "Hanime1.me",
+        "fileName": "hanime1.js",
+        "key": "hanime1",
+        "version": "2.4.0",
+        "description": "视频源, 需要 venera-v 2.0.0 及以上"
+    },
+    {
+        "name": "Hanime1 H漫画",
+        "fileName": "hanime1_comics.js",
+        "key": "hanime1_comics",
+        "version": "1.2.1"
+    }
+]
