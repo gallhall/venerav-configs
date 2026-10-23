@@ -18,7 +18,7 @@ https://cdn.jsdelivr.net/gh/gallhall/venerav-configs@main/index.json
 
 | 源 | 文件 | 说明 |
 |---|---|---|
-| Pixiv | `pixiv_token.js` | 需要在源设置里填写 `refresh_token`、`clientId`、`clientSecret`、`hashSalt` |
+| Pixiv | `pixiv_token.js` | 需要在源设置里填写 `refresh_token`、`clientId`、`clientSecret`、`hashSalt`，可以通过 [pixivpy](https://github.com/upbit/pixivpy) 获取 |
 | Hanime1.me | `hanime1.js` | 视频源，需要 venera-v 2.0.0 及以上 |
 | Hanime1 H漫画 | `hanime1_comics.js` | |
 
