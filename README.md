@@ -22,23 +22,6 @@ https://cdn.jsdelivr.net/gh/gallhall/venerav-configs@main/index.json
 | Hanime1.me | `hanime1.js` | Video source, needs venera-v 2.0.0 or later |
 | Hanime1 H漫画 | `hanime1_comics.js` | |
 
-## Add or update a source
-
-1. Put the `.js` file in the root of the repository.
-2. List it in `index_extra.json`, in the same format as `index.json`:
-   ```json
-   {
-       "name": "My source",
-       "fileName": "my_source.js",
-       "key": "my_source",
-       "version": "1.0.0",
-       "description": "Optional, shown in the source list"
-   }
-   ```
-3. Push. The `Sync upstream` workflow rebuilds `index.json` and purges jsDelivr.
-
-To update a source, replace its `.js` file **and** raise its `version` in `index_extra.json` to the one in the file. The app only offers an update when that version is higher.
-
 ## Create a new configuration
 
 1. Download `_template_.js`, `_venera_.js`, put them in the same directory

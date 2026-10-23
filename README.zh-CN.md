@@ -22,23 +22,6 @@ https://cdn.jsdelivr.net/gh/gallhall/venerav-configs@main/index.json
 | Hanime1.me | `hanime1.js` | 视频源，需要 venera-v 2.0.0 及以上 |
 | Hanime1 H漫画 | `hanime1_comics.js` | |
 
-## 添加或更新源
-
-1. 把 `.js` 文件放在仓库根目录。
-2. 在 `index_extra.json` 里登记，格式和 `index.json` 一样：
-   ```json
-   {
-       "name": "我的源",
-       "fileName": "my_source.js",
-       "key": "my_source",
-       "version": "1.0.0",
-       "description": "可选，显示在源列表里"
-   }
-   ```
-3. 推送。`Sync upstream` 工作流会重新生成 `index.json`，并清除 jsDelivr 缓存。
-
-更新源时，替换 `.js` 文件，**同时**把 `index_extra.json` 里的 `version` 改成文件里的版本号。应用只有在这个版本号变大时才会提示更新。
-
 ## 编写新的源
 
 1. 下载 `_template_.js` 和 `_venera_.js`，放在同一个目录
