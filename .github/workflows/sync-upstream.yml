@@ -85,8 +85,21 @@ jobs:
       - name: Purge jsDelivr CDN
         if: github.ref_name == github.event.repository.default_branch
         run: |
-          for file in $(git diff --name-only "$BEFORE" HEAD | grep -E '\.(js|json)$' || true); do
-            curl -s -o /dev/null -w "$file %{http_code}\n" --max-time 10 \
-              "https://purge.jsdelivr.net/gh/${GITHUB_REPOSITORY}@main/$file" || true
-            sleep 0.5
-          done
+          FILES=$(git diff --name-only "$BEFORE" HEAD | grep -E '\.(js|json)$' || true)
+          if [ -z "$FILES" ]; then
+            echo "Nothing to purge"
+            exit 0
+          fi
+          purge() {
+            for file in $FILES; do
+              curl -s -o /dev/null -w "$file %{http_code}\n" --max-time 10 \
+                "https://purge.jsdelivr.net/gh/${GITHUB_REPOSITORY}@main/$file" || true
+              sleep 0.5
+            done
+          }
+          # jsDelivr can still see the previous commit of main right after a
+          # push, and then caches the old files again: purge late, and twice.
+          sleep 30
+          purge
+          sleep 120
+          purge
