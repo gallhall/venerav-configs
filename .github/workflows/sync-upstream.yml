@@ -1,0 +1,92 @@
+name: Sync upstream
+
+# Merges venera-app/venera-configs into this fork every day.
+#
+# Own sources: add the .js file and list it in index_extra.json, never in
+# index.json. index.json is rebuilt from the upstream index plus
+# index_extra.json on every run, so edits made to it directly are lost.
+#
+# The merge never overwrites changes of this fork: if a file was changed
+# both here and upstream in conflicting ways, the run fails and pushes
+# nothing, to be merged by hand.
+
+on:
+  schedule:
+    - cron: "0 20 * * *" # 04:00 in China
+  workflow_dispatch: {}
+  push:
+    paths:
+      - index_extra.json
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-upstream
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      # The built-in token cannot push changes to workflow files. If upstream
+      # changes one, add a token with the repo and workflow scopes as the
+      # SYNC_TOKEN secret, or press "Sync fork" on GitHub once.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SYNC_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Merge upstream
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add upstream https://github.com/venera-app/venera-configs.git
+          git fetch upstream main
+          BEFORE=$(git rev-parse HEAD)
+          echo "BEFORE=$BEFORE" >> "$GITHUB_ENV"
+
+          if ! git merge --no-edit --no-ff upstream/main; then
+            CONFLICTS=$(git diff --name-only --diff-filter=U)
+            if [ -f index_extra.json ]; then
+              # index.json is rebuilt below, so its conflicts do not matter.
+              CONFLICTS=$(echo "$CONFLICTS" | grep -vx index.json || true)
+            fi
+            if [ -n "$CONFLICTS" ]; then
+              echo "::error::Conflicts with upstream, merge by hand: $CONFLICTS"
+              git merge --abort
+              exit 1
+            fi
+            git checkout upstream/main -- index.json
+            git commit --no-edit
+          fi
+
+      - name: Rebuild index.json
+        run: |
+          if [ ! -f index_extra.json ]; then
+            echo "No index_extra.json, index.json stays as upstream has it"
+            exit 0
+          fi
+          git show upstream/main:index.json > "$RUNNER_TEMP/upstream_index.json"
+          node scripts/merge-index.js "$RUNNER_TEMP/upstream_index.json" index_extra.json index.json
+          if ! git diff --quiet index.json; then
+            git commit -m "chore: rebuild index.json with index_extra.json" index.json
+          fi
+
+      - name: Push
+        run: |
+          if [ "$(git rev-parse HEAD)" = "$BEFORE" ]; then
+            echo "Already up to date"
+            exit 0
+          fi
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      # Pushes of this workflow do not start purge_cdn.yml, so purge here.
+      - name: Purge jsDelivr CDN
+        if: github.ref_name == github.event.repository.default_branch
+        run: |
+          for file in $(git diff --name-only "$BEFORE" HEAD | grep -E '\.(js|json)$' || true); do
+            curl -s -o /dev/null -w "$file %{http_code}\n" --max-time 10 \
+              "https://purge.jsdelivr.net/gh/${GITHUB_REPOSITORY}@main/$file" || true
+            sleep 0.5
+          done
