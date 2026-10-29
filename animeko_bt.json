@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 2,
+  "mediaSources": [
+    {
+      "id": "venerav-mikan",
+      "factoryId": "rss",
+      "version": 1,
+      "arguments": {
+        "name": "蜜柑计划",
+        "description": "动画 BT 资源站，提供种子文件，起播快",
+        "iconUrl": "https://mikanime.tv/images/favicon.ico",
+        "searchConfig": {
+          "searchUrl": "https://mikanime.tv/RSS/Search?searchstr={keyword}"
+        }
+      }
+    },
+    {
+      "id": "venerav-dmhy",
+      "factoryId": "rss",
+      "version": 1,
+      "arguments": {
+        "name": "动漫花园",
+        "description": "动画 BT 资源站",
+        "iconUrl": "https://share.dmhy.org/favicon.ico",
+        "searchConfig": {
+          "searchUrl": "https://share.dmhy.org/topics/rss/rss.xml?keyword={keyword}&sort_id=2"
+        }
+      }
+    },
+    {
+      "id": "venerav-acgrip",
+      "factoryId": "rss",
+      "version": 1,
+      "arguments": {
+        "name": "ACG.RIP",
+        "description": "动画 BT 资源站，提供种子文件",
+        "iconUrl": "https://acg.rip/favicon.ico",
+        "searchConfig": {
+          "searchUrl": "https://acg.rip/1.xml?term={keyword}"
+        }
+      }
+    },
+    {
+      "id": "venerav-bangumi-moe",
+      "factoryId": "rss",
+      "version": 1,
+      "arguments": {
+        "name": "萌番组",
+        "description": "动画 BT 资源站，提供种子文件",
+        "iconUrl": "https://bangumi.moe/favicon.ico",
+        "searchConfig": {
+          "searchUrl": "https://bangumi.moe/rss/search/{keyword}"
+        }
+      }
+    },
+    {
+      "id": "venerav-acgnx",
+      "factoryId": "rss",
+      "version": 1,
+      "arguments": {
+        "name": "ACGNX",
+        "description": "动画 BT 资源站",
+        "iconUrl": "https://share.acgnx.se/favicon.ico",
+        "searchConfig": {
+          "searchUrl": "https://share.acgnx.se/rss-sort-1.xml?keyword={keyword}"
+        }
+      }
+    },
+    {
+      "id": "venerav-nyaa",
+      "factoryId": "rss",
+      "version": 1,
+      "arguments": {
+        "name": "Nyaa",
+        "description": "BT 资源站（动画分类），提供种子文件",
+        "iconUrl": "https://nyaa.si/static/favicon.png",
+        "searchConfig": {
+          "searchUrl": "https://nyaa.si/?page=rss&q={keyword}&c=1_0&f=0"
+        }
+      }
+    }
+  ]
+}
